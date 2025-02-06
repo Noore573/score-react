@@ -6,7 +6,7 @@
 
 @layer components{
     .searchbar{
-        @apply w-cwsearchbar1 h-full rounded-2xl bg-white outline-none pl-5 py-1 font-Rubik border-2 border-themeDarkblue1
+        @apply w-cwsearchbar1 h-full rounded-2xl bg-white outline-none pl-5 py-1 font-Rubik border-2 border-white focus:border-themeblue2 transition duration-150
     }
 
     @media (max-width: 1070px) {

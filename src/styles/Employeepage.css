@@ -1,0 +1,56 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
+@layer components {
+    .ECard1 {
+        @apply w-2/5   h-ECH1 bg-white rounded-xl shadow-lg mx-1 flex flex-col justify-center items-center
+    }
+    .ECard2 {
+        @apply w-3/5  h-ECH1 bg-white rounded-xl shadow-lg mx-1 flex flex-col justify-center items-center
+    }
+    .ECard3 {
+        @apply w-4/12   h-ECH2 bg-white rounded-xl shadow-lg mx-1 flex flex-col justify-center items-center
+    }
+    .ECard4 {
+        @apply w-8/12  h-ECH2 bg-white rounded-xl shadow-lg mx-1 flex flex-col justify-center items-center
+    }
+    .UserinfoText{
+        @apply font-Rubik text-CustomeCardnumber font-medium capitalize tracking-wide my-1
+    }
+    .pointcard{
+        @apply text-PCHfont2
+    }
+    
+    @media (max-width: 900px) {
+        .pointcard{
+            @apply text-PCHfont21
+        }
+    }
+
+    @media (max-width: 768px) {
+        .ECard1 {
+            @apply w-full  h-ECH1 bg-white rounded-xl shadow-lg mx-1 flex flex-col justify-center items-center my-3
+        }
+        .ECard2 {
+            @apply w-full  h-ECH1 bg-white rounded-xl shadow-lg mx-1 flex flex-col justify-center items-center my-3
+        }
+        .ECard3 {
+            @apply w-full   h-ECH2 bg-white rounded-xl shadow-lg mx-1 flex flex-col justify-center items-center my-3
+        }
+        .ECard4 {
+            @apply w-full  h-ECH2 bg-white rounded-xl shadow-lg mx-1 flex flex-col justify-center items-center my-3
+        }
+        .UserinfoText{
+            @apply font-Rubik text-CustomeCardnumber font-medium capitalize tracking-wide my-1
+        }
+        .UserinfoText{
+            @apply text-CustomeCardnumber2
+        }
+        .pointcard{
+            @apply text-PCHfont3
+        }
+    }
+}

@@ -45,6 +45,10 @@ module.exports = {
         CustomeCard1title2:"2.2vw",
         CustomeCard1number3:"3vw",
         CustomeCard1title3:"2.4vw",
+        PCHfont1:"1.1vw",
+        PCHfont2:"0.9vw",
+        PCHfont21:"1.1vw",
+        PCHfont3:"2.5vw",
 
 
       },
@@ -56,6 +60,12 @@ module.exports = {
         CustomeContent:"42vh",
         CH1:"90vh",
         CH2:"60vh",
+        //employeepro
+        ECH1:"38vh",
+        ECH2:"46vh",
+        PCTCh1:"11vh"
+        
+        
       },
       width:{
         CustomeWidth:"8vw",
@@ -65,6 +75,8 @@ module.exports = {
         CustomeC1:"0.2vw",
         //header
         cwsearchbar1:"60vw",
+        //employee
+        PCH1:"20vw"
       },
       borderRadius: {
         "custom-bl": "20rem",
@@ -78,6 +90,8 @@ module.exports = {
       fontFamily: {
         Bebas_Neue: ["Bebas Neue", "sans-serif"],
         Rubik: ["Rubik", "sans-serif"],
+        Oswald:['Oswald','serif']
+        
       },
     },
   },

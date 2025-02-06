@@ -5,6 +5,7 @@ import p2 from "../../assets/p2.jpg";
 import p3 from "../../assets/p3.png";
 import p4 from "../../assets/p4.jpg";
 import p5 from "../../assets/p5.jpg";
+import bluebg from "../../assets/bluebg.jpg";
 import "../../styles/tw.css";
 import { useNavigate } from "react-router-dom";
 
@@ -12,6 +13,7 @@ const Landingpage = () => {
   return (
     <div className="flex flex-col overflow-hidden">
       <Header />
+      <Welcome ></Welcome>
       <Preview
         title="Welcome to SCORE"
         description="An AI powerd store management system to track and improve employees
@@ -58,15 +60,16 @@ const Header = () => {
   };
   return (
     <div className=" flex flex-row h-12 w-full bg-[#80DDF7] justify-between">
-      <img className=" h-full w-14 object-fit" src={Scorelogo}></img>
+      {/* <img className=" h-full w-14 object-fit" ></img> */}
+      <div></div>
       <div className="links flex flex-row  items-center  h-full ">
         <p
-          className="ml-5 mr-5 cursor-pointer underline  underline-offset-4 text-[#132t3D] transition  hover:text-[#13293db2] hover:underline-offset-8 "
+          className="ml-5 mr-5 cursor-pointer underline  underline-offset-4 text-[#132t3D] font-semibold hover:text-[#13293db2] hover:underline-offset-8  duration-200 "
           onClick={handleLoginnav}
         >
           Login
         </p>
-        <p className="ml-5 mr-5 cursor-pointer underline  underline-offset-4  text-[#132t3D] transition  hover:text-[#13293db2] hover:underline-offset-8">
+        <p className="ml-5 mr-5 cursor-pointer underline  underline-offset-4  text-[#132t3D] font-semibold  hover:text-[#13293db2] hover:underline-offset-8 duration-200">
           Contact
         </p>
       </div>
@@ -102,3 +105,19 @@ const Preview = ({ title, description, logo, image }) => {
     </div>
   );
 };
+
+const Welcome = () => {
+  return (
+    <div className=" flex justify-center flex-col items-center w-full h-1/6 bg-red-200 "
+    style={{
+      backgroundImage: ` url(${bluebg}) `,
+      backgroundSize:`cover`
+    }}>
+        <img className="  flex items-center justify-center w-1/3 h-1/6  " src={Scorelogo}></img>
+        <h1 className="font-Oswald font-extrabold text-5xl pb-10 tracking-widest ">Modernizing Workspace</h1>
+        <h1 className="font-Oswald font-extrabold text-2xl pb-10 ">Explore our app</h1>
+    </div>
+  );
+}
+
+

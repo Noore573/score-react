@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Sidemenus from "../components/Sidemenus";
 import Header from "../components/Header";
 import SidemenuIcon from "../components/Sidemenusicon";
@@ -10,57 +10,40 @@ import {
   TableHead,
   TableRow,
   Paper,
+  getListItemSecondaryActionClassesUtilityClass,
 } from "@mui/material";
 import { PieChart } from "@mui/x-charts/PieChart";
 import { LineChart } from "@mui/x-charts/LineChart";
 import dayjs from "dayjs";
-import "../styles/tw.css"
+import "../styles/tw.css";
+import { useNavigate } from "react-router-dom";
+import { useUser } from "../context/UserContext";
 
-// const Homepage = () => {
-//   return (
-//     <div className="flex flex-row bg-gradient-to-bl from-white  via-lthird via-80% to-lfourth">
-//       <Sidemenus />
+const Homepage = () => {
+  // getting the user data globaly
+  const { user, loading } = useUser(); 
+  console.log("🚀 ~ Homepage ~ loading:", loading)
+  
+  if (loading) return <h1>Loading...</h1>;
 
-//       {/* <div>
-//       <SidemenuIcon />
-
-//       </div> */}
-//       <div className="flex flex-col w-full h-screen ">
-//         <Header />
-//         <div className="MainContents w-full h-full p-5 ">
-//           <div className="Row1 flex flex-row w-full h-CustomeContent mb-2">
-//             <C1 />
-//             <C2 />
-//           </div>
-//           <div className="Row2 flex flex-row w-full h-CustomeContent  mb-2">
-//             <C3 />
-//             <C4 />
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-const Homepage = () => {  
-  return (  
-    <div className="flex flex-row bg-gradient-to-bl from-white via-lthird via-80% to-lfourth">  
-
-       <Sidemenus />  
-      <div className="flex flex-col w-full md:h-screen h-fit">  
-        <Header />  
-        <div className="MainContents w-full h-full p-5">  
-          <div className="responsive-row">  
-            <C1 />  
-            <C2 />  
-          </div>  
-          <div className="responsive-row">  
-            <C3 />  
-            <C4 />  
-          </div>  
-        </div>  
-      </div>  
-    </div>  
-  );  
+  return (
+    <div className="flex flex-row bg-gradient-to-bl from-white via-lthird via-80% to-lfourth">
+      <Sidemenus />
+      <div className="flex flex-col w-full md:h-screen h-fit">
+        <Header profilephoto={user?.profile_photo}/>
+        <div className="MainContents w-full h-full p-5">
+          <div className="responsive-row">
+            <C1 />
+            <C2 />
+          </div>
+          <div className="responsive-row">
+            <C3 />
+            <C4 />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default Homepage;
@@ -73,9 +56,9 @@ const C1 = () => {
           series={[
             {
               data: [
-                { id: 0, value: 10 ,label:"score1" },
-                { id: 1, value: 15,label:"score2" },
-                { id: 2, value: 20 ,label:"score3"},
+                { id: 0, value: 10, label: "score1" },
+                { id: 1, value: 15, label: "score2" },
+                { id: 2, value: 20, label: "score3" },
               ],
               highlightScope: { fade: "global", highlight: "item" },
               faded: {
@@ -130,34 +113,30 @@ const C2 = () => {
     new Date("2023-12"),
   ];
   const seriesData = [
-    [
-      2304, 3187, 2456, 2890, 3728, 4023, 1999, 3956,
-      2789, 3547, 2104, 3599,
-    ],
+    [2304, 3187, 2456, 2890, 3728, 4023, 1999, 3956, 2789, 3547, 2104, 3599],
   ];
   return (
     <div className="content_cardlarge">
       <div className="w-full h-fit py-2   flex justify-center items-center">
-      <LineChart
-        xAxis={[
-          {
-            // label: "Date",
-            data: xAxisData,
-            tickInterval: xAxisData,
-            scaleType: "time",
-            valueFormatter: (date) => dayjs(date).format("MMM D"),
-          },
-        ]}
-        // yAxis={[{ label: "Profit(thousands)" }]}
-        series={[
-          { label: "Al-Shaalan2", data: seriesData[0] },
-          // { label: "Toronto, ON", data: seriesData[1] },
-        ]}
-        height={300}
-        width={700}
-      />
+        <LineChart
+          xAxis={[
+            {
+              // label: "Date",
+              data: xAxisData,
+              tickInterval: xAxisData,
+              scaleType: "time",
+              valueFormatter: (date) => dayjs(date).format("MMM D"),
+            },
+          ]}
+          // yAxis={[{ label: "Profit(thousands)" }]}
+          series={[
+            { label: "Al-Shaalan2", data: seriesData[0] },
+            // { label: "Toronto, ON", data: seriesData[1] },
+          ]}
+          height={300}
+          width={700}
+        />
       </div>
-     
     </div>
   );
 };
@@ -274,10 +253,7 @@ const C4 = () => {
   ];
 
   return (
-    <div
-      className="content_cardlarge2"
-      style={{ scrollbarWidth: "none" }}
-    >
+    <div className="content_cardlarge2" style={{ scrollbarWidth: "none" }}>
       <TableContainer component={Paper}>
         <Table>
           <TableHead>
@@ -365,9 +341,7 @@ const Card = ({ type, number, variant, date, percentage }) => {
 const PieText = ({ text, number }) => {
   return (
     <div className="flex flex-col justify-between items-center">
-      <h1 className="pietext1 ">
-        {number}
-      </h1>
+      <h1 className="pietext1 ">{number}</h1>
       <h1 className="pietext2">{text}</h1>
     </div>
   );
