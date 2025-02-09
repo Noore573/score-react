@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Sidemenus from "../../components/Sidemenus";
 import Header from "../../components/Header";
 import "../../styles/Employeepage.css";
@@ -7,8 +7,20 @@ import profilephoto from "../../assets/profilepage2.jpg";
 import { PieChart } from "@mui/x-charts/PieChart";
 import { BarChart } from "@mui/x-charts/BarChart";
 import { lightBlue } from "@mui/material/colors";
+import { useUser } from "../../context/UserContext";
+import { useNavigate } from "react-router-dom";
+import Loading from "../../components/loading";
 
 const EmployeeProfilePage = () => {
+  const navigate = useNavigate();
+  const { user, loading } = useUser();
+  const [employeeInfo, setEmployeeInfo] = useState("");
+  const [error, setError] = useState("");
+  const [loadingemp, setLoadingemp] = useState(true);
+  const [employeePoints, setEmployeePoints] = useState(0);
+  const [employeeMonthlyPoints, setEmployeeMonlthyPoints] = useState(null);
+  const [TotalCusomer, setTotalCustomer] = useState(0);
+  const [empActivityData, setEmpActivityData] = useState([]);
   const Userinfo = [
     "Noore sabah",
     "Damascus",
@@ -16,28 +28,166 @@ const EmployeeProfilePage = () => {
     "21/5/2021",
     "8am - 5pm",
   ];
+  const token = localStorage.getItem("token");
+  useEffect(() => {
+    const fetchEmployeeData = async () => {
+      try {
+        const response = await fetch("http://127.0.0.1:8000/api/employees/12", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const data = await response.json();
+        if (response.ok) {
+          setEmployeeInfo(data.data);
+          console.log("🚀 ~ fetchEmployeeData ~ data:", data.data);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    // employee points
+    const fetchEmployeePoints = async () => {
+      try {
+        const points_response = await fetch(
+          "http://127.0.0.1:8000/api/employees/calculate-points/12",
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        const points_data = await points_response.json();
+        if (points_response.ok) {
+          setEmployeePoints(points_data.data.score);
+          console.log(
+            "🚀 ~ fetchEmployeePoints ~ points_data.data.score:",
+            points_data.data.score
+          );
+        }
+      } catch (error) {
+        console.log(error);
+      } 
+    };
+    const fetchEmployeeMonthPoints = async () => {
+      try {
+        const result = [];
+        for (let month = 1; month <= 12; month++) {
+          const month_response = await fetch(
+            "http://127.0.0.1:8000/api/employees/calculate-points/monthly/12",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+              body: JSON.stringify({
+                month: month,
+                year: "2024",
+              }),
+            }
+          );
+          const month_data = await month_response.json();
+          if (month_response.ok) {
+            // console.log("ok",month_data.data);
+            result.push(month_data.data.score);
+            // console.log("🚀 ~ fetchEmployeeMonthPoints ~ month_data:", month_data)
+          } else {
+            // console.log("error",month_response)
+          }
+        }
+        setEmployeeMonlthyPoints(result);
+        console.log("🚀 ~ fetchEmployeeMonthPoints ~ result:", result);
+      } catch (error) {
+        // console.log("🚀 ~ fetchEmployeeMonthPoints ~ error:", error)
+      }
+    };
+    const fetchEmployeeActivityData = async () => {
+      try {
+        const activity_response = await fetch(
+          "http://127.0.0.1:8000/api/records/employee/1",
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        const activity_data=await activity_response.json()
+        // data processing 
+        let customersSum = 0;
+        let disagreements = 0;
+        let clothesChanges = 0;
+        let purchaseAttempts = 0;
+        let customersAlone = 0;
+        activity_data.forEach((record) => {
+          // console.log("record",record.customers_number);
+          customersSum+=record.customers_number
+          disagreements += record.disagreement_over_customer.length;
+          clothesChanges += record.changing_clothes_attempt;
+          purchaseAttempts += record.purchases_attempt;
+         if( record.customer_alone.length>0)customersAlone+=1
+        });
+        console.log("customersSum",customersSum);
+        setTotalCustomer(customersSum)
+        setEmpActivityData([
+          { id: 0, value: disagreements, label: "Disagreements" },
+          { id: 1, value: clothesChanges, label: "Clothes Changes" },
+          { id: 2, value: purchaseAttempts, label: "Purchase Attempts" },
+          { id: 3, value: customersAlone, label: "Customers Alone" },
+        ])
+        console.log("🚀 ~ fetchEmployeeActivityData ~ TotalCusomer:", TotalCusomer)
+        console.log("🚀 ~ fetchEmployeeActivityData ~ empActivityData:", empActivityData)
+      } catch (error) {
+      console.log("🚀 ~ fetchEmployeeActivityData ~ error:", error)
+      }finally {
+        setLoadingemp(false);
+      }
+    };
+
+    fetchEmployeeData();
+    fetchEmployeePoints();
+    fetchEmployeeActivityData();
+    // fetchEmployeeMonthPoints();
+  }, [navigate]);
+  if (loading || loadingemp) return <Loading />;
+  const employeename = `${employeeInfo.first_name} ${employeeInfo.last_name}`;
+  const employee_shift = `${employeeInfo.shift_starts} - ${employeeInfo.shift_ends}`;
   return (
     <div className="flex flex-row bg-gradient-to-bl from-white via-lthird via-80% to-lfourth">
       <Sidemenus />
       <div className="flex flex-col w-full md:h-screen h-fit">
-        <Header />
-        <div className="MainContents w-full h-full p-5">
-          <div className="responsive-row">
-            <C1
-              photo={profilephoto}
-              username={Userinfo[0]}
-              city={Userinfo[1]}
-              number={Userinfo[2]}
-              date={Userinfo[3]}
-              shift={Userinfo[4]}
-            />
-            <C2 />
+        <Header profilephoto={user?.profile_photo} />
+        {loading ? (
+          <p>Loading data..</p>
+        ) : error ? (
+          <p>error</p>
+        ) : employeeInfo ? (
+          <div className="MainContents w-full h-full p-5">
+            <div className="responsive-row">
+              <C1
+                photo={employeeInfo.photos[0]}
+                username={employeename}
+                city={employeeInfo.address}
+                number={employeeInfo.phone_number}
+                department={employeeInfo.department}
+                shift={employee_shift}
+              />
+              <C2 />
+            </div>
+            <div className="responsive-row">
+              <C3 total_points={employeePoints} />
+              <C4 dataPoints={employeeMonthlyPoints} />
+            </div>
           </div>
-          <div className="responsive-row">
-            <C3 />
-            <C4 />
-          </div>
-        </div>
+        ) : (
+          <p>Nothing to show</p>
+        )}
       </div>
     </div>
   );
@@ -45,17 +195,19 @@ const EmployeeProfilePage = () => {
 
 export default EmployeeProfilePage;
 
-const C1 = ({ photo, username, city, number, date, shift }) => {
+const C1 = ({ photo, username, city, number, department, shift }) => {
+  let photopath = `http://localhost:8000/storage/${photo}`;
+  photopath = photopath.replace("/public/", "/");
   return (
     <div className=" ECard1 flex flex-row ">
       <div className="ProfileAvatar rounded-custom-circle h-52 w-52 bg-red-500 overflow-hidden ">
-        <img src={photo} className="h-full object-cover"></img>
+        <img src={photopath} className="h-full w-full object-cover"></img>
       </div>
       <div className="Userinfo flex flex-col mx-6  ">
         <h2 className="UserinfoText">{username}</h2>
         <h2 className="UserinfoText">{city}</h2>
         <h2 className="UserinfoText">{number}</h2>
-        <h2 className="UserinfoText">{date}</h2>
+        <h2 className="UserinfoText">{department}</h2>
         <h2 className="UserinfoText">{shift}</h2>
       </div>
     </div>
@@ -89,9 +241,11 @@ const C2 = () => {
     </div>
   );
 };
-const C3 = () => {
+const C3 = (total_points) => {
+  console.log("🚀 ~ C3 ~ total_points:", total_points.total_points);
+
   const Pointsinfo = [
-    ["Total Points", "30,000", "up", "12.5"],
+    ["Total Points", total_points.total_points, "up", "12.5"],
     ["This month", "5900", "up", "2.1"],
     ["Today", "850", "down", "0.2"],
     ["Services", "39", "up", "70"],
@@ -122,58 +276,64 @@ const C3 = () => {
     </div>
   );
 };
-const C4 = () => {
+const C4 = (dataPoints) => {
+  // console.log("🚀 ~ C4 ~ dataPoints:", dataPoints.dataPoints)
+  // const points = dataPoints?.dataPoints || [];
+  // console.log("🚀 ~ C4 ~ points:", points)
+
   const dataMonth = [
-    "January",
-    "February",
+    "Jan",
+    "Feb",
     "March",
     "April",
     "May",
     "June",
     "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
   ];
-
-  const dataPoints = [
+  const points = [
     15400, 7200, 12500, 9800, 11000, 14500, 16300, 8300, 16900, 13000, 20000,
     5400,
   ];
   return (
     <div className=" ECard4">
-      <div className="w-full h-fit py-2   flex justify-center items-center">
-      <BarChart  
+      <div className="w-full h-fit py-2    flex justify-center items-center">
+        <BarChart
+          xAxis={[
+            {
+              scaleType: "band",
+              data: dataMonth,
+              label: "Months",
+              tickCount: 12,
+            },
+          ]}
+          yAxis={[
+            {
+              scaleType: "linear",
+              domain: [0, 20000],
+              // label: "Values",
+              tickCount: 5,
+            },
+          ]}
+          series={[
+            {
+              data: points,
+              fill: "#fcba03",
+              name: "Monthly Data",
+            },
+          ]}
+          // width={500}
+          height={300}
+          // showLegend={true}
+          // grid={true}
 
-  xAxis={[{   
-      scaleType: "band",   
-      data: dataMonth,  
-      label: "Months",   
-      tickCount: 12  , 
-      
-
-  
-  }]}  
-  yAxis={[{   
-      scaleType: "linear",   
-      domain: [0, 20000],  
-      // label: "Values",   
-      tickCount: 5   
-  }]}  
-  series={[{   
-      data: dataPoints,   
-      fill: "#fcba03",
-      name: "Monthly Data"   
-  }]}  
-  // width={500}  
-  height={300}  
-  // showLegend={true}  
-  // grid={true}  
-  animationDuration={500}  
-  borderRadius={5}
-/>
+          animationDuration={500}
+          borderRadius={5}
+        />
       </div>
     </div>
   );

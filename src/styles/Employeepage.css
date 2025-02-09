@@ -15,7 +15,7 @@
         @apply w-4/12   h-ECH2 bg-white rounded-xl shadow-lg mx-1 flex flex-col justify-center items-center
     }
     .ECard4 {
-        @apply w-8/12  h-ECH2 bg-white rounded-xl shadow-lg mx-1 flex flex-col justify-center items-center
+        @apply w-8/12  h-ECH2 bg-white rounded-xl shadow-lg mx-1 flex flex-col justify-center items-center font-bold
     }
     .UserinfoText{
         @apply font-Rubik text-CustomeCardnumber font-medium capitalize tracking-wide my-1
@@ -23,6 +23,16 @@
     .pointcard{
         @apply text-PCHfont2
     }
+    .EmployeeCard{
+        @apply w-2/6    h-empCard bg-[#c1fcff] rounded-3xl shadow-lg  flex flex-row justify-center items-center
+    }
+    /* w-3/12 h-2/4 */
+    .EmployeeCard2{
+        @apply w-full h-full bg-white shadow-lg flex flex-col justify-between rounded-md
+    }
+    /* .EmployeesContents{
+        @apply 
+    } */
     
     @media (max-width: 900px) {
         .pointcard{
@@ -47,7 +57,7 @@
             @apply font-Rubik text-CustomeCardnumber font-medium capitalize tracking-wide my-1
         }
         .UserinfoText{
-            @apply text-CustomeCardnumber2
+            @apply text-CustomeCardnumber2 
         }
         .pointcard{
             @apply text-PCHfont3

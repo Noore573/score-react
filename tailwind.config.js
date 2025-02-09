@@ -63,7 +63,8 @@ module.exports = {
         //employeepro
         ECH1:"38vh",
         ECH2:"46vh",
-        PCTCh1:"11vh"
+        PCTCh1:"11vh",
+        empCard:"33vh",
         
         
       },
@@ -95,6 +96,8 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    require('tailwind-scrollbar-hide'),
+  ],
 };
 

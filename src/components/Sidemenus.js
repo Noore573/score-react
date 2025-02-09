@@ -9,7 +9,6 @@ import adminicon from "../assets/admin.png";
 import Analyticsicon from "../assets/analytics.png";
 import "../styles/tw.css";
 import { useNavigate } from "react-router-dom";
-
 const Sidemenus = () => {
   const navigate = useNavigate();
   const handleLogout = async () => {
@@ -55,7 +54,7 @@ const Sidemenus = () => {
           <Tab icon={Leaderboardicon} text="Leaderboard">
             {" "}
           </Tab>
-          <Tab icon={Employeesicon} text="Employees">
+          <Tab icon={Employeesicon} text="Employees" navigate_to={"/Employees"} navigate={navigate}>
             {" "}
           </Tab>
           <Tab icon={Pointsystemicon} text="Point System">
@@ -102,9 +101,10 @@ const Sidemenus = () => {
 
 export default Sidemenus;
 
-const Tab = ({ icon, text }) => {
+const Tab = ({ icon, text,navigate_to,navigate }) => {
+  const handleclick=()=>navigate(navigate_to);
   return (
-    <div className="display_Sidemenubtn hover:translate-x-3 duration-150 ">
+    <div className="display_Sidemenubtn hover:translate-x-3 duration-150 " onClick={handleclick} >
       <img src={icon} className="object-contain h-7 mr-5  " />
       <h2 className="display_Sidemenutext font-Rubik font-semibold text-customsidemenu text-themeDarkblue1 ">
         {text}

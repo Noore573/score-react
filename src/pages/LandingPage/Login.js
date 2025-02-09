@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import Scorelogo from "../../assets/scorelogo.png";
 import Loginside from "../../assets/loginside.jpg";
 import { useNavigate } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
+import { useLocation } from "react-router-dom";
 // import { json } from "react-router-dom";
 
 const Login = () => {
@@ -52,7 +54,7 @@ const Side1 = () => {
       // 4:store the tokes
       localStorage.setItem("token",data.token)
       console.log(data);
-      alert("Login successful")
+      // alert("Login successful")
       navigate("/home")
 
 
@@ -99,13 +101,29 @@ const Side1 = () => {
     </div>
   );
 };
+// const Side2 = () => {
+//   return (
+//     <div className="w-1/2 hidden  md:block ">
+//       <img
+//         src={Loginside}
+//         className="object-fill rounded-bl-custom-bl h-full shadow-2xl"
+//       ></img>
+//     </div>
+//   );
+// };
 const Side2 = () => {
   return (
-    <div className="w-1/2 hidden md:block ">
+    <motion.div
+      className="w-1/2 hidden md:block"
+      initial={{ x: "50%" }} // Start off-screen to the right
+      animate={{ x: 0 }} // Slide in to the original position
+      transition={{ type: "easeIn", duration: 1 }} // Animation duration and easing
+    >
       <img
         src={Loginside}
         className="object-fill rounded-bl-custom-bl h-full shadow-2xl"
-      ></img>
-    </div>
+        alt="Login Side"
+      />
+    </motion.div>
   );
 };

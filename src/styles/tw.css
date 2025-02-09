@@ -8,6 +8,15 @@
 html {}
 
 @layer components {
+
+    /* Hide scrollbar for IE, Edge, and Firefox */
+    .scrollbar-hide {
+        -ms-overflow-style: none;
+        /* IE and Edge */
+        scrollbar-width: none;
+        /* Firefox */
+    }
+
     .display_Sidemenu {
         @apply block h-screen w-1/6 bg-themeblue2 pl-2 rounded-tr-2xl rounded-br-2xl
     }
@@ -61,15 +70,15 @@ html {}
     }
 
     .content_cardsmall_Text {
-        @apply flex flex-row items-center justify-center   w-CustomeWidth h-1/3 pb-10
+        @apply flex flex-row items-center justify-center w-CustomeWidth h-1/3 pb-10
     }
 
     .pietext1 {
-        @apply  font-Rubik font-bold text-CustomeCard1number
+        @apply font-Rubik font-bold text-CustomeCard1number
     }
 
     .pietext2 {
-        @apply  capitalize font-semibold font-Rubik text-CustomeCard1title
+        @apply capitalize font-semibold font-Rubik text-CustomeCard1title
     }
 
     @media (max-width: 1070px) {
@@ -114,7 +123,7 @@ html {}
         }
 
         .content_cardsmall_Text {
-            @apply flex flex-row items-center justify-center w-full h-full pb-10 
+            @apply flex flex-row items-center justify-center w-full h-full pb-10
         }
 
         .Cards {
@@ -136,25 +145,27 @@ html {}
         .Cardstext_date {
             @apply text-CustomeCarddate2
         }
+
         .pietext1 {
-            @apply  text-CustomeCard1number3
+            @apply text-CustomeCard1number3
         }
-    
+
         .pietext2 {
-            @apply  text-CustomeCard1title3
+            @apply text-CustomeCard1title3
         }
 
 
         @media (max-width: 509px) {
             .pietext1 {
-                @apply  text-CustomeCard1number3
+                @apply text-CustomeCard1number3
             }
-        
+
             .pietext2 {
-                @apply  text-CustomeCard1title3
+                @apply text-CustomeCard1title3
             }
-            .content_cardsmall_Text{
-                @apply w-CustomeWidth4 
+
+            .content_cardsmall_Text {
+                @apply w-CustomeWidth4
             }
         }
 

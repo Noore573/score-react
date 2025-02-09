@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Sidemenus from "../components/Sidemenus";
 import Header from "../components/Header";
 import SidemenuIcon from "../components/Sidemenusicon";
+import Loading from "../components/loading";
 import {
   Table,
   TableBody,
@@ -22,13 +23,13 @@ import { useUser } from "../context/UserContext";
 const Homepage = () => {
   // getting the user data globaly
   const { user, loading } = useUser(); 
-  console.log("🚀 ~ Homepage ~ loading:", loading)
-  
-  if (loading) return <h1>Loading...</h1>;
+  if (loading) return <Loading/>;
 
   return (
     <div className="flex flex-row bg-gradient-to-bl from-white via-lthird via-80% to-lfourth">
       <Sidemenus />
+
+
       <div className="flex flex-col w-full md:h-screen h-fit">
         <Header profilephoto={user?.profile_photo}/>
         <div className="MainContents w-full h-full p-5">
@@ -287,8 +288,7 @@ const C4 = () => {
 const Card = ({ type, number, variant, date, percentage }) => {
   return (
     <div
-      className="Cards
-        "
+      className="Cards cursor-pointer hover:scale-105 duration-150 "
     >
       <h1 className="font-Rubik font-bold text-themeDarkblue2 capitalize    Cardstext_type   ">
         {type}

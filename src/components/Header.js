@@ -42,11 +42,8 @@ const Profile = ({ photo, username }) => {
   const [error, setError] = useState(false);
   const handleImageLoad = () => {
     setLoading(false);
-    console.log("loading=false");
   };
-  console.log("error", photo);
   const handleImageError = () => {
-    console.log("err", photo);
     setError(true);
     setLoading(false);
   };  
