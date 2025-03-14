@@ -122,7 +122,7 @@ const Preview = ({ title, description, logo, image }) => {
 
 const Welcome = () => {
   return (
-    <div className=" flex justify-center flex-col items-center w-full h-full  "
+    <div className=" flex justify-center flex-col items-center w-full h-full mt-8  "
     // style={{
     //   // backgroundImage: ` url(${bluebg}) `,
     //   // backgroundImage: `linear-gradient(to bottom, rgba(255, 255, 255, 0),rgba(0, 0, 0, 0.6),rgba(0, 0, 0, 0.9) ), url(${image}) `,

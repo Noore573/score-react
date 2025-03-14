@@ -6,6 +6,7 @@ import EmployeeProfilePage from './pages/Employees/EmployeeProfilePage';
 import Leaderboard from './pages/Leaderboard';
 import { UserProvider } from './context/UserContext';
 import EmployeesPage from './pages/Employees/EmployeesPage';
+import CreateNewEmployee from './pages/Employees/CreateNewEmployee';
 function App() {
   return (
     <div className="App">
@@ -16,8 +17,9 @@ function App() {
       <Route path='/login' element={<Login/>}></Route>
       <Route path='/home' element={<Homepage/>}></Route>
       <Route path='/leaderboard' element={<Leaderboard/>}></Route>
-      <Route path='/Employee' element={<EmployeeProfilePage/>}></Route> {/*in here i will add the id later */}
+      <Route path='/Employee/:id' element={<EmployeeProfilePage/>}></Route>
       <Route path='/Employees' element={<EmployeesPage/>}></Route>
+      <Route path='/CreateNewEmployee' element={<CreateNewEmployee/>}></Route>
       
     </Routes> 
   </Router>

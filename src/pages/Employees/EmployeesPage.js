@@ -6,6 +6,7 @@ import "../../styles/Employeepage.css";
 import avatar from "../../assets/output-onlinegiftools.gif";
 import defultavatart from "../../assets/empavatar.png";
 import saleicon from "../../assets/colorsale.png";
+import { useNavigate } from "react-router-dom";
 const EmployeesPage = () => {
   const { user, loading } = useUser();
   const token = localStorage.getItem("token");
@@ -90,7 +91,11 @@ const EmployeeCard2 = ({employee}) => {
 // to get the shift
 const shift_starts=employee.shift_starts.split(":").slice(0,2).join(":")
 const shift_ends=employee.shift_ends.split(":").slice(0,2).join(":")
-
+const navigate=useNavigate()
+const handleNavigateToEmpPage=(employee_id)=>{
+  console.log(employee_id);
+  navigate(`/Employee/${employee_id}`)
+}
   return (
     <div className="EmployeeCard2 p-2 cursor-pointer" >
       <div className="first-row flex flex-row justify-between">
@@ -101,12 +106,18 @@ const shift_ends=employee.shift_ends.split(":").slice(0,2).join(":")
           #{employee.id}
         </div>
       </div>
-      <div className="profile image flex items-center justify-center w-full hover:-translate-y-1 duration-100 ">
+      <div className="profile image flex items-center justify-center w-full hover:-translate-y-1 duration-100 " onClick={()=>handleNavigateToEmpPage(employee.id)}>
+        {employee.photos[0].includes('via.placeholder')?
         <img
-          src={defultavatart}
+        src={defultavatart}
+        alt="Default Avatar"
+        className=" h-32 w-32 object-cover  border-themeblue2 border-2 rounded-full"
+      />:
+        <img
+          src={`http://localhost:8000/storage/${employee.photos[0].replace('public/',"")}`}
           alt="Default Avatar"
-          className=" h-32 w-32 object-cover bg-green-400 border-themeblue2 border-2 rounded-full"
-        />
+          className=" h-32 w-32 object-cover  border-themeblue2 border-2 rounded-full"
+        />}
       </div>
       <div className="Emp-info flex flex-col items-center justify-center">
         <p className="UserinfoText font-bold">{employee.first_name} {employee.last_name}</p>

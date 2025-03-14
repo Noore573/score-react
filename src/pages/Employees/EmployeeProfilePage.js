@@ -8,8 +8,9 @@ import { PieChart } from "@mui/x-charts/PieChart";
 import { BarChart } from "@mui/x-charts/BarChart";
 import { lightBlue } from "@mui/material/colors";
 import { useUser } from "../../context/UserContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useParams } from "react-router-dom";
 import Loading from "../../components/loading";
+import defultavatart from "../../assets/empavatar.png";
 
 const EmployeeProfilePage = () => {
   const navigate = useNavigate();
@@ -21,6 +22,8 @@ const EmployeeProfilePage = () => {
   const [employeeMonthlyPoints, setEmployeeMonlthyPoints] = useState(null);
   const [TotalCusomer, setTotalCustomer] = useState(0);
   const [empActivityData, setEmpActivityData] = useState([]);
+  const {id}=useParams();
+  console.log("🚀 ~ EmployeeProfilePage ~ employeeeID:", id)
   const Userinfo = [
     "Noore sabah",
     "Damascus",
@@ -32,7 +35,7 @@ const EmployeeProfilePage = () => {
   useEffect(() => {
     const fetchEmployeeData = async () => {
       try {
-        const response = await fetch("http://127.0.0.1:8000/api/employees/12", {
+        const response = await fetch(`http://127.0.0.1:8000/api/employees/${id}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -52,7 +55,7 @@ const EmployeeProfilePage = () => {
     const fetchEmployeePoints = async () => {
       try {
         const points_response = await fetch(
-          "http://127.0.0.1:8000/api/employees/calculate-points/12",
+          `http://127.0.0.1:8000/api/employees/calculate-points/${id}`,
           {
             method: "GET",
             headers: {
@@ -78,7 +81,7 @@ const EmployeeProfilePage = () => {
         const result = [];
         for (let month = 1; month <= 12; month++) {
           const month_response = await fetch(
-            "http://127.0.0.1:8000/api/employees/calculate-points/monthly/12",
+            `http://127.0.0.1:8000/api/employees/calculate-points/monthly/${id}`,
             {
               method: "POST",
               headers: {
@@ -109,7 +112,7 @@ const EmployeeProfilePage = () => {
     const fetchEmployeeActivityData = async () => {
       try {
         const activity_response = await fetch(
-          "http://127.0.0.1:8000/api/records/employee/1",
+          `http://127.0.0.1:8000/api/records/employee/${id}`,
           {
             method: "GET",
             headers: {
@@ -200,8 +203,14 @@ const C1 = ({ photo, username, city, number, department, shift }) => {
   photopath = photopath.replace("/public/", "/");
   return (
     <div className=" ECard1 flex flex-row ">
-      <div className="ProfileAvatar rounded-custom-circle h-52 w-52 bg-red-500 overflow-hidden ">
-        <img src={photopath} className="h-full w-full object-cover"></img>
+      <div className="ProfileAvatar rounded-custom-circle h-52 w-52  overflow-hidden ">
+      {photo.includes('via.placeholder')?
+        <img
+        src={defultavatart}
+        alt="Default Avatar"
+        className=" h-full w-full object-contain"
+      />:
+        <img src={photopath} className="h-full w-full object-cover"/>}
       </div>
       <div className="Userinfo flex flex-col mx-6  ">
         <h2 className="UserinfoText">{username}</h2>

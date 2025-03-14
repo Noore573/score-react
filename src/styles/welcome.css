@@ -24,7 +24,8 @@
     align-items: center;
     width: 100%;
     height: 100%; /* h-1/6 */
-    background: linear-gradient(270deg, #ffffff, #a9ecff, #d2f5ff);
+    
+    background: linear-gradient(270deg, #ffffff, #a9ecff, #d2f5ff,#74ffd5,#8ce6ff);
     background-size: 300% 300%;
     animation: gradientAnimation 10s ease infinite;
   }

@@ -19,6 +19,23 @@ const Loading = () => {
                     transform: scale(3.5);
                     animation: moveArrow 1s infinite linear;
                 }
+                     @keyframes circleanimation {
+                    0% {
+                        background: radial-gradient(circle, #42f5bf,#80DDF7);
+                    }
+                      25%{
+                      background: radial-gradient(circle, #74ffd5,#8ce6ff);
+                      }
+                      50%{
+                      background: radial-gradient(circle, #86ffdb,#a0eaff);
+                      }
+                    75%{
+                      background: radial-gradient(circle, #74ffd5,#8ce6ff);
+                      }
+                    100% {
+                        background: radial-gradient(circle, #42f5bf,#80DDF7);
+                    }
+                }
                 
                 @keyframes moveArrow {
                     0% {
@@ -42,6 +59,7 @@ const Loading = () => {
     border-radius: 50%;          /* Makes the div a circle */  
     background: radial-gradient(circle, #42f5bf,#80DDF7); /* Gradient colors */  
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Optional shadow for effect */  
+    // animation: circleanimation 2s ease-in  infinite  ;
 }  
                 `}
       </style>
